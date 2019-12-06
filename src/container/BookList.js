@@ -4,14 +4,6 @@ import { addBookActionCreator, addFetchBookListPendingAC, addFetchBookListSucces
 import { connect } from "react-redux";
 
 const BookList = (props) => {
-    /*const getBooks = () => {
-        fetch('http://localhost:4730/books')
-          .then((newBooksJson) => newBooksJson.json())
-          .then((newBooksArray) => {setBooks(newBooksArray);});
-    };
-
-    useEffect(() => getBooks(), []);
-    */
     useEffect(() => {props.fetchBooks();}, []);
     return (<Fragment>
          <ul>
