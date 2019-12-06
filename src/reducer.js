@@ -4,7 +4,6 @@ const INITIAL_STATE = {
 };
 
 export function booksReducer(state = INITIAL_STATE, action) {
-    console.log('booksReducer' + action.type);
     switch (action.type) {
         case 'ADD_BOOK':
             let newStateA = {...state};
