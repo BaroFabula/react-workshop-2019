@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 
 export function CounterWithHooks({intialValue: initialValue, language}) {
     const [count, setCount] = useState(initialValue);

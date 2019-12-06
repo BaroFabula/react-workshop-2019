@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { BookListItem } from "./BookListItem";
 import { addBookActionCreator } from "../actions";
 import { connect } from "react-redux";
@@ -14,20 +14,18 @@ const BookList = (props) => {
     */
     return (<Fragment>
          <ul>
-             {props.compPropData.books.map((book, index) => (
+             {props.books.map((book, index) => (
                  <li key={index}><BookListItem book={book}/></li>
              ))}
          </ul>
-        <button onClick={() => this.props.update({title: 'my new book'})}>Add book</button>
+        <button onClick={() => props.update({title: 'my new book'})}>Add book</button>
      </Fragment>);
 };
 
 const mapStateToProps = (state) => {
-    return { compPropData: state.data };
+    return { books: state.books };
 };
 const mapDispatchToProps = (dispatch) => {
     return { update: (book) => {dispatch(addBookActionCreator(book))}};
 };
 export default connect(mapStateToProps, mapDispatchToProps)(BookList);
-
-
