@@ -1,7 +1,8 @@
 import React, { Fragment, useEffect } from 'react';
 import { BookListItem } from "./BookListItem";
-import { addBookActionCreator, addFetchBookListPendingAC, addFetchBookListSuccessAC, fetchBooks } from "../actions";
+import { addBookAC, fetchBooksAC } from "../actions";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 const BookList = (props) => {
     useEffect(() => {props.fetchBooks();}, []);
@@ -9,7 +10,7 @@ const BookList = (props) => {
         <span>{props.error ? props.error.message: ''}</span>
          <ul>
              {props.books.map((book, index) => (
-                 <li key={index}><BookListItem book={book}/></li>
+                 <li key={index}><Link to={`/book/${book.isbn}`}><BookListItem book={book}/></Link></li>
              ))}
          </ul>
         <button onClick={() => props.addBook({title: 'my new book'})}>Add book</button>
@@ -26,9 +27,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         addBook: (book) => {
-            dispatch(addBookActionCreator(book))
+            dispatch(addBookAC(book))
         },
-        fetchBooks: () => dispatch(fetchBooks())
+        fetchBooks: () => dispatch(fetchBooksAC())
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(BookList);
