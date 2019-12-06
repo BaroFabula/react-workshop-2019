@@ -2,7 +2,8 @@ const INITIAL_STATE = {
     books : [],
     fetching: false,
     error: null,
-    book: null
+    book: null,
+    edit: {isbn: Math.floor(Math.random()*1000000000000), title: ''}
 };
 
 export function booksReducer(state = INITIAL_STATE, action) {
@@ -19,6 +20,7 @@ export function booksReducer(state = INITIAL_STATE, action) {
             fetchBooklistPendingState.fetching = true;
             fetchBooklistPendingState.error = null;
             fetchBooklistPendingState.book = null;
+            fetchBooklistPendingState.edit = {isbn: Math.floor(Math.random()*1000000000000), title: ''};
             return fetchBooklistPendingState;
         case 'FETCH_BOOK_LIST_SUCCESS':
             let fetchBooklistSuccessState = {...state};
@@ -47,6 +49,7 @@ export function booksReducer(state = INITIAL_STATE, action) {
             fetchBookSuccessState.fetching = false;
             fetchBookSuccessState.error = null;
             fetchBookSuccessState.book = action.json;
+            fetchBookSuccessState.edit = action.json;
             return fetchBookSuccessState;
         case 'FETCH_BOOK_ERROR':
             let fetchBookErrorState = {...state};
@@ -55,6 +58,20 @@ export function booksReducer(state = INITIAL_STATE, action) {
             fetchBookErrorState.error = action.error;
             fetchBookErrorState.book = null;
             return fetchBookErrorState;
+        case 'EDIT_BOOK':
+            let editBookState = {...state};
+            editBookState.edit = {...state.edit};
+            editBookState.edit[action.key] = action.value;
+            return editBookState;
+        case 'SAVE_EDIT_BOOK':
+            let saveEditBookState = {...state};
+            saveEditBookState.book = {...state.edit};
+            return  saveEditBookState;
+        case 'SAVE_NEW_BOOK':
+            let saveNewBookState = {...state};
+            saveNewBookState.books = [...state.books, state.edit]
+            saveNewBookState.edit = {isbn: Math.floor(Math.random()*1000000000000), title: ''};
+            return saveNewBookState;
         default:
             return state;
     }
