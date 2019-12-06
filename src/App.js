@@ -6,6 +6,7 @@ import Name from "./components/Name";
 import { Counter } from "./container/Counter";
 import { CounterWithHooks } from "./container/CounterWithHooks";
 import BookList from "./container/BookList";
+import { Link, NavLink, Route } from "react-router-dom";
 
 class App extends Component {
   render() {
@@ -16,12 +17,16 @@ class App extends Component {
           <p>
             Edit <code>src/App.js</code> and save to reload.
           </p>
-          <BookList/>
-          <hr/>
-          <CounterWithHooks intialValue={0} language={'de'}/>
-          <hr/>
-          <Counter initialValue={0}/>
-          <hr/>
+          <nav>
+            <Link to={"/booklist"}>Booklist</Link><span>     </span>
+            <Link to={"/counterhooks"}>Counter with hooks</Link><span>     </span>
+            <NavLink to={"/counter"}>Counter</NavLink>
+          </nav>
+          <main>
+            <Route exact path="/booklist" component={BookList} />
+            <Route exact path="/counterhooks" render={() => <CounterWithHooks intialValue={0} language={'de'}/>} />
+            <Route exact path="/counter" render={() => <Counter initialValue={0}/>} />
+          </main>
           {React.createElement(Name, {name: 'BerndProps'}, [])}
           {React.createElement(Name, {}, [])}
           <hr/>
